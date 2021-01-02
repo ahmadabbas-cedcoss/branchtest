@@ -24,5 +24,7 @@ function calculate($result,$string,$op){
          break;
    }
 }
-
+ echo "string";
+ echo "string";
+ echo "string";
  ?>
