@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>calculator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<div>
+		<div class="display">
+			<p id="op">0</p>
+		</div>
+		<div class="keys">
+			<button class="button" type="button" id="1" onclick="reply_click(this.id)">1</button>
+			<button class="button" type="button" id="2" onclick="reply_click(this.id)">2</button>
+			<button class="button" type="button" id="3" onclick="reply_click(this.id)">3</button>
+			<button class="button" type="button" id="+" onclick="reply_op(this.id)">+</button><br>
+			<button class="button" type="button" id="4" onclick="reply_click(this.id)">4</button>
+			<button class="button" type="button" id="5" onclick="reply_click(this.id)">5</button>
+			<button class="button" type="button" id="6" onclick="reply_click(this.id)">6</button>
+			<button class="button" type="button" id="-" onclick="reply_op(this.id)">-</button><br>
+			<button class="button" type="button" id="7" onclick="reply_click(this.id)">7</button>
+			<button class="button" type="button" id="8" onclick="reply_click(this.id)">8</button>
+			<button class="button" type="button" id="9" onclick="reply_click(this.id)">9</button>
+			<button class="button" type="button" id="*" onclick="reply_op(this.id)">*</button><br>
+			<button class="button" type="button" id="0" onclick="reply_click(this.id)">0</button>
+			<button class="button" type="button" id="AC" onclick="clr()">AC</button>
+			<button class="button" type="button" id="/" onclick="reply_op(this.id)">/</button>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+var string="";
+var op="";
+var flag=0;
+var result=0;
+
+function clr(){
+    document.getElementById("op").innerHTML = "0" ;
+    string="";
+	op="";
+	flag=0;
+	result=0;
+}
+function reply_click(clicked_id){
+	string=string+clicked_id;
+	console.log(string);
+	document.getElementById("op").innerHTML =string;
+}
+function reply_op(clicked_id){
+	flag=flag+1;
+	if (flag==1) {
+		op=clicked_id;
+		result=string;
+		string="";
+	}
+	if (flag==2) {
+		// result=calculate(result,string,op);
+          $.ajax({
+            url:'action.php',
+            type:'POST',
+            data:{result:result,string:string,op:op},
+            success:function(res){
+              result=res;
+              // newvalue(result);
+              $('#op').html(result);
+              },
+            error: function(){
+            alert("error");
+            }
+          });
+		console.log(result+op+string);
+		op=clicked_id;
+		console.log(op);
+		flag=1;
+		string="";
+	}
+}
+// function newvalue(res){
+// 	result=res;
+// }
+</script>
