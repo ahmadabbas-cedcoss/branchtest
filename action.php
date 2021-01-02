@@ -28,3 +28,6 @@ function calculate($result,$string,$op){
  echo "string";
  echo "string";
  ?>
+
+pranjal
+ahmad
